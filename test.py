@@ -8,18 +8,27 @@ def testModel(model, csv_testing_file):
 	f = open(csv_testing_file)
 	f.readline()
 	output_data = {}
-
+	survival_count = 0
+	death_count = 0
+	bad_data_count = 0
 	for line in f:
 		data = line.split(',')
+		'''
 		if not validateData(data):
 			print 'insufficient passenger data'
+			bad_data_count += 1
 			continue
+		'''
 		p_survival = calculateSurvival(model, data, True)
 		p_death = calculateSurvival(model, data, False)
 		if p_survival > p_death: # yay!
 			print 'passenger {}, {} {}, survived!'.format(data[0], data[3], data[2])
+			survival_count += 1
 		else: 
 			print 'dead. p_survival = {} and p_death = {}'.format(p_survival, p_death)#passenger {}, {} {}, did not survive'.format(data[0], data[3], data[2])
+			death_count += 1
+
+	print survival_count, death_count, bad_data_count
 
 def calculateSurvival(model, data, survive_modifier):
 	# Inputs::
@@ -43,14 +52,17 @@ def calculateSurvival(model, data, survive_modifier):
 	p_gender = divisionHelper(gender_count, survival_count, death_count, survive_modifier)
 
 	# P(age | survival)
-	passenger_age = float(data[5])
-	if passenger_age <= 18:
-		age_count = model['age' + mortality_modifier]['minor']
-	elif passenger_age > 18 and passenger_age <= 65:
-		age_count = model['age' + mortality_modifier]['adult']
+	if data[5]:
+		passenger_age = float(data[5])
+		if passenger_age <= 18:
+			age_count = model['age' + mortality_modifier]['minor']
+		elif passenger_age > 18 and passenger_age <= 65:
+			age_count = model['age' + mortality_modifier]['adult']
+		else:
+			age_count = model['age' + mortality_modifier]['senior']
+		p_age = divisionHelper(age_count, survival_count, death_count, survive_modifier)
 	else:
-		age_count = model['age' + mortality_modifier]['senior']
-	p_age = divisionHelper(age_count, survival_count, death_count, survive_modifier)
+		p_age = 1
 
 	# P(sibling count | survival)
 	passenger_sib_count = model['sibling_count' + mortality_modifier][int(data[6])]
@@ -79,7 +91,3 @@ def divisionHelper(p_left, survival_count, death_count, survive_modifier):
 	else:
 		return p_left / float(death_count)
 
-def validateData(csv_data):
-	if not csv_data[5]:
-		return False
-	return True

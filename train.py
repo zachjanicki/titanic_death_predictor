@@ -15,10 +15,10 @@ def trainModel(csv_file):
 	model['gender_death'] = {'male': 0, 'female': 0}
 	model['age_survival'] = {'minor': 0, 'adult': 0, 'senior': 0} # currently defined as 0-18, 19-64, 65+
 	model['age_death'] = {'minor': 0, 'adult': 0, 'senior': 0}
-	model['sibling_count_survival'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
-	model['sibling_count_death'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
-	model['parent_child_count_survival'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
-	model['parent_child_count_death'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
+	model['sibling_count_survival'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+	model['sibling_count_death'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+	model['parent_child_count_survival'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+	model['parent_child_count_death'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
 	model['fare'] = 0 # not sure how to break up this category yet... need to examine min/max from data
 	model['embarked_survival'] = {'cherbourg': 0, 'queenstown': 0, 'southampton': 0}
 	model['embarked_death'] = {'cherbourg': 0, 'queenstown': 0, 'southampton': 0}
