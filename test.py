@@ -13,33 +13,73 @@ def testModel(model, csv_testing_file):
 		data = line.split(',')
 		if not validateData(data):
 			print 'insufficient passenger data'
-			return None
-		p_survival = calculateSurvival(model, data)
-		p_death = calculateDeath(model, data)
+			continue
+		p_survival = calculateSurvival(model, data, True)
+		p_death = calculateSurvival(model, data, False)
 		if p_survival > p_death: # yay!
 			print 'passenger {}, {} {}, survived!'.format(data[0], data[3], data[2])
 		else: 
-			print 'passenger {}, {} {}, did not survive'.format(data[0], data[3], data[2])
+			print 'dead. p_survival = {} and p_death = {}'.format(p_survival, p_death)#passenger {}, {} {}, did not survive'.format(data[0], data[3], data[2])
 
-def calculateSurvival(model, data):
+def calculateSurvival(model, data, survive_modifier):
 	# Inputs::
 	#	dict -- model
 	#	list -- data // preseparated line of csv data from csv_testing_file
 	# Outputs::
 	#	double -- p_survival
 	
-	survival_count = model['passenger_count'] - model['survivals']
-	passenger_class = model['passenger_class'][int(data[1])]
-	p_class = passenger_class / survival_count
-
-	if data[4] == 'male':
-		gender = model['gender']['male']
+	death_count = model['passenger_count'] - model['survivals']
+	survival_count = model['passenger_count'] - death_count
+	if survive_modifier:
+		mortality_modifier = '_survival'
 	else:
-		gender = model['gender']['female']
-	p_gender = gender / survival_count
+		mortality_modifier = '_death'
+	# P(class | survival)
+	passenger_class = model['passenger_class' + mortality_modifier][int(data[1])]
+	p_class = divisionHelper(passenger_class, survival_count, death_count, survive_modifier)
 
+	# P(gender | survival)
+	gender_count = model['gender' + mortality_modifier][data[4]]
+	p_gender = divisionHelper(gender_count, survival_count, death_count, survive_modifier)
+
+	# P(age | survival)
+	passenger_age = float(data[5])
+	if passenger_age <= 18:
+		age_count = model['age' + mortality_modifier]['minor']
+	elif passenger_age > 18 and passenger_age <= 65:
+		age_count = model['age' + mortality_modifier]['adult']
+	else:
+		age_count = model['age' + mortality_modifier]['senior']
+	p_age = divisionHelper(age_count, survival_count, death_count, survive_modifier)
+
+	# P(sibling count | survival)
+	passenger_sib_count = model['sibling_count' + mortality_modifier][int(data[6])]
+	p_sib_count = divisionHelper(passenger_sib_count, survival_count, death_count, survive_modifier)
+
+	# P(parent/child count | survival)
+	passenger_parent_child_count = model['parent_child_count' + mortality_modifier][int(data[7])]
+	p_parent_child_count = divisionHelper(passenger_parent_child_count, survival_count, death_count, survive_modifier)
+
+	# P(port | survival)
+	port = data[11].strip()
+	if port == 'C':
+		passenger_port = model['embarked' + mortality_modifier]['cherbourg']
+	elif port == 'Q':
+		passenger_port = model['embarked' + mortality_modifier]['queenstown']
+	else:
+		passenger_port = model['embarked' + mortality_modifier]['southampton']
+	p_port = divisionHelper(passenger_port, survival_count, death_count, survive_modifier)
+
+	return p_class * p_gender * p_age * p_sib_count * p_parent_child_count * p_port
+
+
+def divisionHelper(p_left, survival_count, death_count, survive_modifier):
+	if survive_modifier:
+		return p_left / float(survival_count)
+	else:
+		return p_left / float(death_count)
 
 def validateData(csv_data):
-	if not csv_data[6]:
+	if not csv_data[5]:
 		return False
 	return True

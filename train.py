@@ -10,15 +10,15 @@ def trainModel(csv_file):
 	model['passenger_count'] = 0
 	model['survivals'] = 0
 	model['passenger_class_survival'] = {1: 0, 2: 0, 3: 0}
-	model['passenger_class_death']
+	model['passenger_class_death'] = {1: 0, 2: 0, 3: 0}
 	model['gender_survival'] = {'male': 0, 'female': 0}
-	model['gender_death']
+	model['gender_death'] = {'male': 0, 'female': 0}
 	model['age_survival'] = {'minor': 0, 'adult': 0, 'senior': 0} # currently defined as 0-18, 19-64, 65+
-	model['age_death']
-	model['sibling_count_survival'] = {}
-	model['sibling_count_death'] = {}
-	model['parent_child_count_survival'] = {}
-	model['parent_child_count_death'] = {}
+	model['age_death'] = {'minor': 0, 'adult': 0, 'senior': 0}
+	model['sibling_count_survival'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
+	model['sibling_count_death'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
+	model['parent_child_count_survival'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
+	model['parent_child_count_death'] = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
 	model['fare'] = 0 # not sure how to break up this category yet... need to examine min/max from data
 	model['embarked_survival'] = {'cherbourg': 0, 'queenstown': 0, 'southampton': 0}
 	model['embarked_death'] = {'cherbourg': 0, 'queenstown': 0, 'southampton': 0}
@@ -26,10 +26,10 @@ def trainModel(csv_file):
 	f = open(csv_file)
 	f.readline() # skipping schema line
 	for line in f:
-		model = loadDataIntoModel(line, model)
+		model = loadDataIntoModel(model, line)
 	return model
 
-def loadDataIntoModel(csv_data, model):
+def loadDataIntoModel(model, csv_data):
 	# Inputs::
 	#	str -- csv_data // a line of csv data from the data file
 	#	dict -- model 
@@ -86,7 +86,3 @@ def validateData(csv_data):
 	if not csv_data[6]:
 		return False
 	return True
-
-print trainModel('data/train.csv')
-
-
