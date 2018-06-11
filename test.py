@@ -6,29 +6,23 @@ def testModel(model, csv_testing_file):
 	#	
 
 	f = open(csv_testing_file)
-	f.readline()
+	f.readline() # skipping schema line
 	output_data = {}
 	survival_count = 0
 	death_count = 0
 	bad_data_count = 0
 	for line in f:
 		data = line.split(',')
-		'''
-		if not validateData(data):
-			print 'insufficient passenger data'
-			bad_data_count += 1
-			continue
-		'''
 		p_survival = calculateSurvival(model, data, True)
 		p_death = calculateSurvival(model, data, False)
 		if p_survival > p_death: # yay!
 			print 'passenger {}, {} {}, survived!'.format(data[0], data[3], data[2])
 			survival_count += 1
 		else: 
-			print 'dead. p_survival = {} and p_death = {}'.format(p_survival, p_death)#passenger {}, {} {}, did not survive'.format(data[0], data[3], data[2])
+			print 'passenger {}, {} {}, did not survive'.format(data[0], data[3], data[2])
 			death_count += 1
 
-	print survival_count, death_count, bad_data_count
+	print 'Out of 418 passengers, {} survived and {} did not survive'.format(survival_count, death_count)
 
 def calculateSurvival(model, data, survive_modifier):
 	# Inputs::
