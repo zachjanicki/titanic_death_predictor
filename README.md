@@ -9,6 +9,8 @@ Usage: python main.py data/train.csv data/test.csv
 
 TODO List:
 
+- Make individual test IDs auditable
+
 - Put data into queryable database
 
 - Create ability to stream data into model
