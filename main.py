@@ -15,4 +15,5 @@ if __name__ == "__main__":
 	testing_data_file = sys.argv[2]
 
 	model = trainModel(training_data_file)
-	testModel(model, testing_data_file)
+	output = testModel(model, testing_data_file)
+	print output
