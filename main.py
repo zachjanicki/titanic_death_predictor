@@ -1,6 +1,7 @@
 import sys
 from train import trainModel
 from test import testModel
+from audit import audit
 
 def usage():
 	print "Usage:"
@@ -16,4 +17,6 @@ if __name__ == "__main__":
 
 	model = trainModel(training_data_file)
 	output = testModel(model, testing_data_file)
-	print output
+	while True:
+		audit_id = raw_input('enter a passenger ID to audit (892-1309): ')
+		audit(audit_id, output)

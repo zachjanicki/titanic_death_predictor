@@ -78,8 +78,6 @@ def loadDataIntoModel(model, csv_data):
 		model['embarked' + mortality_modifier]['queenstown'] += 1
 	elif port == 'S':
 		model['embarked' + mortality_modifier]['southampton'] += 1
-	else:
-		print 'DATA ERROR!'
 	return model
 
 def validateData(csv_data):
