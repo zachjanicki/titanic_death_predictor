@@ -1,0 +1,5 @@
+{"config": {
+	"training_data_file": "data/training_data.csv",
+	"test_data_file": "data/test_data.csv",
+	"database": "data/database.db"
+}}

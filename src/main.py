@@ -1,9 +1,6 @@
 import sys
 import sqlite3
 from Model import Model
-from train import trainModel
-from test import testModel
-from audit import audit
 
 def usage():
 	print "Usage:"
@@ -25,7 +22,7 @@ if __name__ == "__main__":
 	'''
 
 	
-	db = sqlite3.connect('data/database.db')
+	db = sqlite3.connect('../data/database.db')
 	model = Model()
 	model.train(db)
 	model.calculateSurvivalTotalFromTestData(db)
