@@ -1,0 +1,4 @@
+{
+	"default_error": "There was an unknown error",
+	"default_warning": "This action could cause unintended behavior"
+}
