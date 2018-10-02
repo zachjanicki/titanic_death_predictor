@@ -5,7 +5,7 @@ The Titanic Death Predictor is a queryable JSON restAPI with a trained naive-bay
 
 The trained model will let you predict whether or not a passenger, not from the training data set, survived. The user can do this by looking at the individuals from the pre-existing test data set (in the test_passenger SQLite3 database table, or via the API), or they can submit their own hypothetical passenger to see whether the model predicts survival or death.
 
-Currently the model is predicting that all 331 valid test passengers survive. This is most likely a math error or a poorly trained model. Fortunately, we can examine ways to tune the model to make it better! Because _this is not a black box naive-bayes implementation_, the user can go to the auditPassenger endpoint, and see all of the numeric values that go into the calculation.
+Currently the model is predicting that all 331 valid test passengers survive. This is the result of a poorly trained model. Fortunately, we can examine ways to tune the model to make it better! Because _this is not a black box naive-bayes implementation_, the user can go to the auditPassenger endpoint, and see all of the numeric values that go into the calculation. Future iterations will include the ability to specify weights for certain model properties. 
 
 Data is from [Kaggle](https://www.kaggle.com/c/titanic/data)
 
