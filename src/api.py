@@ -124,8 +124,6 @@ def createNewTestPassenger():
 		embarked = request_data_as_json['embarked']
 		p = Passenger(boarding_class, name, gender, age, sibling_count, parent_child_count, fare, embarked)
 		
-		model.addPassengerToDatabase(p)
-		
 		output = {}
 		output['did_survive'] = model.didPassengerSurvive(p)
 		return json.dumps(output) 
