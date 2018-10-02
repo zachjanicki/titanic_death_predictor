@@ -64,7 +64,6 @@ def createTestTable(csv_data):
 		data = line.split(',')
 		if not validateTestingData(data):
 			continue
-		print data
 		id = int(data[0])
 		boarding_class = int(data[1])
 		name = data[2] + data[3]

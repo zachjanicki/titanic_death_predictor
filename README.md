@@ -1,7 +1,7 @@
 # Titanic Death Predictor
 ### Predicting passenger survival during the sinking of the titanic using naive-bayes.
 
-The Titanic Death Predictor is a queryable HTTP restAPI with a trained naive-bayes model using passenger survival data from 800+ passengers on the Titanic.
+The Titanic Death Predictor is a queryable JSON restAPI with a trained naive-bayes model using passenger survival data from 800+ passengers on the Titanic.
 
 The trained model will let you predict whether or not a passenger, not from the training data set, survived. The user can do this by looking at the individuals from the pre-existing test data set (in the test_passenger SQLite3 database table, or via the API), or they can submit their own hypothetical passenger to see whether the model predicts survival or death.
 
@@ -46,7 +46,7 @@ API Endpoints:
 * `GET api_V_0_1/data/auditPassenger/<int:passenger_id>`
         
    - ` input: integer passenger_id`
-   - `output: {"did_survive": bool} `
+   - `output: a large json object `
 
 * `POST api_V_0_1/data/newPassenger`
    
