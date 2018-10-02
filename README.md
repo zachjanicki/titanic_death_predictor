@@ -46,7 +46,7 @@ API Endpoints:
 * `GET api_V_0_1/data/auditPassenger/<int:passenger_id>`
         
    - ` input: integer passenger_id`
-   - `output: a large json object `
+   - `output: a large json object ` see an example [here](https://pastebin.com/p7MCfQSF) 
 
 * `POST api_V_0_1/data/newPassenger`
    
