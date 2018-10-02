@@ -11,13 +11,15 @@ Data is from [Kaggle](https://www.kaggle.com/c/titanic/data)
 
 ## Setup
 
-    $ git clone https://github.com/zachjanicki/titanic_death_predictor.git
+    $ git clone https://github.com/zachjanicki/titanic_death_predictor.git 
+    $ cd titanic_death_predictor
     $ pip install virtualenv
     $ virtualenv venv
     $ source venv/bin/activate
 
     $ pip install -r requirements.txt
-    $ cd scripts/ && python create_database.py
+    $ cd scripts
+    $ python create_database.py
 
 ## Usage: 
 
