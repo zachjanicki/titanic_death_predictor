@@ -1,0 +1,15 @@
+{
+	"new_passenger_post_request": {
+		"type": "object",
+		"properties": {
+			"boarding_class": {"type": "number"},
+			"name": {"type": "string"},
+			"gender": {"type": "string"},
+			"age": {"type": "number"},
+			"sibling_count": {"type": "number"},
+			"parent_child_count": {"type": "number"},
+			"fare": {"type": "number"},
+			"embarked": {"type": "string"}
+		}
+	}
+}

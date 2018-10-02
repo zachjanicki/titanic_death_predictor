@@ -1,10 +1,12 @@
-from flask import Flask, request
+from flask import Flask, request, abort
+from flask_api import FlaskAPI, status
 import json
 import sqlite3
 
 from Model import Model
 from Passenger import Passenger
 from ErrorHandler import ErrorHandler
+from DataValidator import DataValidator
 
 # model setup
 with open('config/config.json') as config:
@@ -14,16 +16,18 @@ model = Model()
 db = sqlite3.connect(config_json['config']['database'])
 model.train(db)
 db.close()
+
 error_handler = ErrorHandler()
+data_validator = DataValidator()
 
 # api setup
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/api_V_0_1')
 def helloWorld():
 	return 'Hello, World!'
 
-@app.route('/data', methods=['GET'])
+@app.route('/api_V_0_1/data', methods=['GET'])
 def getData():
 	db = sqlite3.connect(config_json['config']['database'])
 	if request.method == 'GET':
@@ -60,8 +64,10 @@ def getData():
 			output['test_passengers'].append(p)
 		db.close()
 		return json.dumps(output)
+	else:
+		abort(405)
 
-@app.route('/data/calculateSurvivalTotals', methods=['GET'])
+@app.route('/api_V_0_1/data/calculateSurvivalTotals', methods=['GET'])
 def calculateSurvivalTotals():
 	db = sqlite3.connect(config_json['config']['database'])
 	if request.method == 'GET':
@@ -69,9 +75,11 @@ def calculateSurvivalTotals():
 		output['survived'], output['perished'] = model.calculateSurvivalTotalFromTestData(db)
 		db.close()
 		return json.dumps(output)
+	else:
+		abort(405)
 
 
-@app.route('/data/didPassengerSurvive/<int:passenger_id>', methods=['GET'])
+@app.route('/api_V_0_1/data/didPassengerSurvive/<int:passenger_id>', methods=['GET'])
 def didPassengerSurvive(passenger_id):
 	if request.method == 'GET':
 		db = sqlite3.connect(config_json['config']['database'])
@@ -95,14 +103,34 @@ def didPassengerSurvive(passenger_id):
 		output = {}
 		output['did_survive'] = model.didPassengerSurvive(p)
 		return json.dumps(output)
+	else:
+		abort(405)
 
-@app.route('/data/newPassenger', methods=['POST'])
+@app.route('/api_V_0_1/data/newPassenger', methods=['POST'])
 def createNewTestPassenger():
 	if request.method == 'POST':
-		print request.data
-		return "200"
-
-
+		if data_validator.validateNewPassengerPostRequestData(request.data):
+			print "should fail"
+		request_data_as_json = json.loads(request.data)
+		boarding_class = request_data_as_json['boarding_class']
+		name = request_data_as_json['name']
+		gender = request_data_as_json['gender']
+		age = request_data_as_json['age']
+		sibling_count = request_data_as_json['sibling_count']
+		parent_child_count = request_data_as_json['parent_child_count']
+		fare = request_data_as_json['fare']
+		embarked = request_data_as_json['embarked']
+		p = Passenger(boarding_class, name, gender, age, sibling_count, parent_child_count, fare, embarked)
+		
+		output = {}
+		output['did_survive'] = model.didPassengerSurvive(p)
+		return json.dumps(output) 
+		
+		#else:
+		#	output = error_handler.error("Post request data is invalid")
+		#	return json.dumps(output)
+	else:
+		abort(405)
 
 
 

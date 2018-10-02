@@ -9,9 +9,7 @@ class Model(object):
 		self.passenger_class_survival_count = {1: 0, 2: 0, 3: 0}
 		self.gender_survival_count = {1: 0, 0: 0} # 1 for male, 0 for female
 		self.age_survival_count = {'minor': 0, 'adult': 0, 'senior': 0} # currently defined as 0-18, 19-64, 65+
-		self.sibling_count_survival_count = { 0: 0, 1: 0, 2: 0, 3: 0, 
-										4: 0, 5: 0, 6: 0, 
-										7: 0, 8: 0, 9: 0}
+		self.sibling_count_survival_count = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
 		self.parent_child_count_survival_count = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
 		self.fare = 0
 		self.embarked_location_survival_count = {'C': 0, 'Q': 0, 'S': 0} # cherbourg, queenstown, southampton
