@@ -158,6 +158,18 @@ class Model(object):
 			# build audit data dictionary
 			audit_data = {}
 
+			# model data
+			audit_data['model_passenger_count'] = self.passenger_count
+			audit_data['model_survival_count'] = self.survivals
+			audit_data['model_death_count'] = self.deaths
+			audit_data['model_boarding_class_survival_count'] = self.passenger_class_survival_count
+			audit_data['model_gender_survival_count'] = self.gender_survival_count
+			audit_data['model_age_survival_count'] = self.age_survival_count
+			audit_data['model_sibling_count_survival_count'] = self.sibling_count_survival_count
+			audit_data['model_parent_child_count_survival_count'] = self.parent_child_count_survival_count
+			audit_data['model_embarked_location_survival_count'] = self.embarked_location_survival_count
+
+			# naive-bayes calculation data
 			audit_data['currently_supported_factors'] = ['boarding_class', 'gender', 'age', 'sibling_count', 'parent_child_count', 'embarked_location']
 
 			audit_data['p_class_survival_prob'] = p_class_survival_prob
